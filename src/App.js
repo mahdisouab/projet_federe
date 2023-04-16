@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Drawer, JoinedClasses, Login, Main } from "./components";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { IsUserRedirect, ProtectedRoute } from "./routes/Routes";
 import { useLocalContext } from "./context/context";
 import db from "./lib/firebase";
@@ -38,7 +38,7 @@ function App() {
   }, [loggedInMail]);
   return (
     <Router>
-      <Switch>
+      <Routes>
         {createdClasses.map((item, index) => (
           <Route key={index} exact path={`/${item.id}`}>
             <Drawer />
@@ -72,7 +72,7 @@ function App() {
             ))}
           </ol>
         </ProtectedRoute>
-      </Switch>
+      </Routes>
     </Router>
   );
 }
