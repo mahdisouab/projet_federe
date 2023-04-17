@@ -2,7 +2,7 @@ import { Avatar, Button, TextField } from "@material-ui/core";
 import React, { useState } from "react";
 import db, { storage } from "../../lib/firebase";
 import "./style.css";
-import firebase from "firebase";
+import firebase from "../../lib/firebase";
 import { useLocalContext } from "../../context/context";
 import { Announcment } from "..";
 

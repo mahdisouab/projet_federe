@@ -1,10 +1,10 @@
-import firebase from "./firebase";
+import  firebase from "./firebase";
 import "firebase/firestore";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
 
-const firebaseConfig = {
+const Config = {
   apiKey: "AIzaSyC1h8BknJCqXNES4fxshGTbPqxbtyiImpY",
   authDomain: "projet-federe.firebaseapp.com",
   projectId: "projet-federe",
@@ -14,12 +14,13 @@ const firebaseConfig = {
   measurementId: "G-1XJMPKWX60",
 };
 
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(Config);
 
 const db = firebase.firestore();
 const auth = firebase.auth();
 const provider = new firebase.auth.GoogleAuthProvider();
 const storage = firebase.storage();
+
 
 export { auth, provider, storage };
 export default db;
