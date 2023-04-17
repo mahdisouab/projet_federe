@@ -5,6 +5,7 @@ import "./style.css";
 import firebase from "firebase";
 import { useLocalContext } from "../../context/context";
 import { Announcment } from "..";
+
 const Main = ({ classData }) => {
   const { loggedInMail } = useLocalContext();
 
