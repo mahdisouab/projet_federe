@@ -19,26 +19,11 @@ const Main = ({ classData }) => {
     }
   };
 
-  const handleUpload = () => {
-    const uploadImage = storage.ref(`images/${image.name}`).put(image);
+  const handleSubmit = () => {
 
-    uploadImage.on("state_changed", () => {
-      storage
-        .ref("images")
-        .child(image.name)
-        .getDownloadURL()
-        .then((url) => {
-          db.collection("announcments")
-            .doc("classes")
-            .collection(classData.id)
-            .add({
-              timstamp: firebase.firestore.FieldValue.serverTimestamp(),
-              imageUrl: url,
-              text: inputValue,
-              sender: loggedInMail,
-            });
-        });
-    });
+    console.log("tesssst");
+
+    //firebase add publication
   };
   return (
     <div className="main">
@@ -81,12 +66,7 @@ const Main = ({ classData }) => {
                       onChange={(e) => setInput(e.target.value)}
                     />
                     <div className="main__buttons">
-                      <input
-                        onChange={handleChange}
-                        variant="outlined"
-                        color="primary"
-                        type="file"
-                      />
+                      <div />
 
                       <div>
                         <Button onClick={() => setShowInput(false)}>
@@ -94,7 +74,7 @@ const Main = ({ classData }) => {
                         </Button>
 
                         <Button
-                          onClick={handleUpload}
+                          onClick={handleSubmit}
                           color="primary"
                           variant="contained"
                         >
