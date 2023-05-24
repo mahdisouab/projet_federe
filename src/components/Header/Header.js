@@ -44,7 +44,7 @@ const Header = ({ children }) => {
             {children}
           
             <Typography variant="h6" className={classes.title}>
-              My Online School
+              Etude à Distance FST
             </Typography>
           </div>
           <div className={classes.header__wrapper__right}>

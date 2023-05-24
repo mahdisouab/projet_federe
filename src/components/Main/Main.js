@@ -121,7 +121,7 @@ const Main = ({ classData }) => {
                 {classData.section}
               </div>
               <div className="main__wrapper2">
-                <em className="main__code">Class Code :</em>
+                <em className="main__code">Code :</em>
                 <div className="main__id">{classData.id}</div>
               </div>
             </div>
@@ -129,8 +129,8 @@ const Main = ({ classData }) => {
         </div>
         <div className="main__announce">
           <div className="main__status">
-            <p>Upcoming</p>
-            <p className="main__subText">No work due</p>
+            <p>Liste  </p>
+            <p className="main__subText">Visioconférences</p>
           </div>
           <div className="main__announcements">
             <div className="main__announcementsWrapper">
@@ -176,7 +176,7 @@ const Main = ({ classData }) => {
                     onClick={() => setShowInput(true)}
                   >
                     <Avatar />
-                    <div>Announce Something to class</div>
+                    <div>Announcez prochaines Visioconférence</div>
                   </div>
                 )}
               </div>
@@ -196,7 +196,7 @@ const Main = ({ classData }) => {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        Visit Link
+                        Visite Lien
                       </a>
                     )}
                   </div>
