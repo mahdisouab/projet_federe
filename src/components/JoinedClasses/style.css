@@ -34,7 +34,6 @@ ol {
   background-color: #174ea6;
 }
 .joined__image {
-  background-image: url(https://gstatic.com/classroom/themes/Physics.jpg);
   height: 100%;
   left: 0;
   position: absolute;
@@ -82,7 +81,7 @@ ol {
   text-align: left;
 }
 .joined__bottom {
-  margin-top: 40%;
+  margin-top: -30%;
   display: flex;
   color: #5f6368;
   justify-content: flex-end;

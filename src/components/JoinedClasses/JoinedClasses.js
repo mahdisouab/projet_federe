@@ -23,8 +23,6 @@ const JoinedClasses = ({ classData }) => {
         />
       </div>
       <div className="joined__bottom">
-        <PermContactCalendar />
-        <FolderOpen />
       </div>
     </li>
   );

@@ -1,5 +1,5 @@
 import { Avatar, Button, TextField } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./style.css";
 import { useLocalContext } from "../../context/context";
 import { Announcment } from "..";
@@ -11,9 +11,45 @@ const Main = ({ classData }) => {
 
   const [showInput, setShowInput] = useState(false);
   const [inputValue, setInput] = useState("");
+  const [linkValue, setLinkValue] = useState(""); // Add this line
   const [image, setImage] = useState(null);
   const [announcements, setAnnouncements] = useState([]);
 
+  useEffect(() => {
+    const firebaseConfig = {
+      apiKey: "AIzaSyC1h8BknJCqXNES4fxshGTbPqxbtyiImpY",
+      authDomain: "projet-federe.firebaseapp.com",
+      projectId: "projet-federe",
+      storageBucket: "projet-federe.appspot.com",
+      messagingSenderId: "817947843477",
+      appId: "1:817947843477:web:8db3072d492f28e9ecf49c",
+      measurementId: "G-1XJMPKWX60",
+    };
+
+    // Initialize Firebase
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+
+    // Create Firestore instance
+    const db = firebase.firestore();
+
+    // Fetch announcements
+    const fetchAnnouncements = async () => {
+      try {
+        const snapshot = await db.collection("publications").get();
+        const announcementsData = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setAnnouncements(announcementsData);
+      } catch (error) {
+        console.error("Error fetching announcements: ", error);
+      }
+    };
+
+    fetchAnnouncements();
+  }, []);
 
   const handleChange = (e) => {
     if (e.target.files[0]) {
@@ -45,6 +81,7 @@ const Main = ({ classData }) => {
 
       const publication = {
         content: inputValue,
+        link: linkValue, // Add the link value
         date: new Date().toISOString(),
         published: true,
       };
@@ -60,6 +97,12 @@ const Main = ({ classData }) => {
           console.error("Error adding publication: ", error);
         });
     }
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return date.toLocaleDateString(undefined, options);
   };
 
   return (
@@ -102,6 +145,13 @@ const Main = ({ classData }) => {
                       value={inputValue}
                       onChange={(e) => setInput(e.target.value)}
                     />
+                    <TextField
+                      id="filled-link-input"
+                      label="Link"
+                      variant="filled"
+                      value={linkValue}
+                      onChange={(e) => setLinkValue(e.target.value)}
+                    />
                     <div className="main__buttons">
                       <div />
 
@@ -131,10 +181,26 @@ const Main = ({ classData }) => {
                 )}
               </div>
               {announcements.map((announcement) => (
-                <div key={announcement.date}>
-                  {/* Render the announcement content */}
-                  <p>{announcement.content}</p>
-                  <p>{announcement.date}</p>
+                <div className="pb" key={announcement.id}>
+                  <div className="announcement__header">
+                    <Avatar src={announcement.authorProfilePicture} />
+                    <div>{announcement.authorName}</div>
+                  </div>
+                  <div className="announcement__content-box">
+                    {" "}
+                    {/* Added container div */}
+                    <p>{announcement.content}</p>
+                    {announcement.link && (
+                      <a
+                        href={announcement.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Visit Link
+                      </a>
+                    )}
+                  </div>
+                  <p>{formatDate(announcement.date)}</p>
                 </div>
               ))}
             </div>
