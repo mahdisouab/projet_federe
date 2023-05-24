@@ -1,10 +1,10 @@
 import { Avatar, Button, TextField } from "@material-ui/core";
 import React, { useState } from "react";
-import db, { storage } from "../../lib/firebase";
 import "./style.css";
-import firebase from "../../lib/firebase";
 import { useLocalContext } from "../../context/context";
 import { Announcment } from "..";
+import firebase from "firebase/compat/app";
+import "firebase/compat/firestore";
 
 const Main = ({ classData }) => {
   const { loggedInMail } = useLocalContext();
@@ -12,6 +12,8 @@ const Main = ({ classData }) => {
   const [showInput, setShowInput] = useState(false);
   const [inputValue, setInput] = useState("");
   const [image, setImage] = useState(null);
+  const [announcements, setAnnouncements] = useState([]);
+
 
   const handleChange = (e) => {
     if (e.target.files[0]) {
@@ -20,11 +22,46 @@ const Main = ({ classData }) => {
   };
 
   const handleSubmit = () => {
+    console.log("tessst");
 
-    console.log("tesssst");
+    if (inputValue.trim() !== "") {
+      const firebaseConfig = {
+        apiKey: "AIzaSyC1h8BknJCqXNES4fxshGTbPqxbtyiImpY",
+        authDomain: "projet-federe.firebaseapp.com",
+        projectId: "projet-federe",
+        storageBucket: "projet-federe.appspot.com",
+        messagingSenderId: "817947843477",
+        appId: "1:817947843477:web:8db3072d492f28e9ecf49c",
+        measurementId: "G-1XJMPKWX60",
+      };
 
-    //firebase add publication
+      // Initialize Firebase
+      if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+      }
+
+      // Create Firestore instance
+      const db = firebase.firestore();
+
+      const publication = {
+        content: inputValue,
+        date: new Date().toISOString(),
+        published: true,
+      };
+
+      db.collection("publications")
+        .add(publication)
+        .then((docRef) => {
+          console.log("Publication added with ID: ", docRef.id);
+          setInput("");
+          setImage(null);
+        })
+        .catch((error) => {
+          console.error("Error adding publication: ", error);
+        });
+    }
   };
+
   return (
     <div className="main">
       <div className="main__wrapper">
@@ -93,6 +130,13 @@ const Main = ({ classData }) => {
                   </div>
                 )}
               </div>
+              {announcements.map((announcement) => (
+                <div key={announcement.date}>
+                  {/* Render the announcement content */}
+                  <p>{announcement.content}</p>
+                  <p>{announcement.date}</p>
+                </div>
+              ))}
             </div>
             <Announcment classData={classData} />
           </div>

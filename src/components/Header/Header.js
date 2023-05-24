@@ -42,12 +42,9 @@ const Header = ({ children }) => {
         <Toolbar className={classes.toolbar}>
           <div className={classes.headerWrapper}>
             {children}
-            <img
-              src="https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg"
-              alt="Classroom"
-            />
+          
             <Typography variant="h6" className={classes.title}>
-              Classroom
+              My Online School
             </Typography>
           </div>
           <div className={classes.header__wrapper__right}>
